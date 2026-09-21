@@ -150,12 +150,13 @@ main {
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;   /* empilha: foto em cima, texto embaixo */
   gap: 32px;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: stretch;     /* o texto ocupa a largura toda */
 }
 
 .avatar-placeholder {
+  align-self: center;       /* centraliza só a foto */
   flex: 0 0 auto;
   width: 128px;
   height: 128px;
@@ -172,7 +173,7 @@ main {
   border: 1px solid var(--line);
 }
 
-.hero-text { flex: 1 1 380px; }
+.hero-text { flex: 0 1 auto; }
 
 .eyebrow {
   color: var(--muted);
