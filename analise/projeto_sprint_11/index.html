@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projeto Final - Sprint 11</title>
+  <title>Food App Funnel &amp; A/A/B Test — Ale's Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
@@ -12,12 +12,12 @@
 
   <header class="site-header">
     <div class="container">
-      <a class="brand" href="/index.html">Análise de Dados</a>
-      <nav aria-label="Navegação principal">
+      <a class="brand" href="/index.html">Data Analysis</a>
+      <nav aria-label="Main navigation">
         <ul class="nav-links">
-          <li><a href="/index.html">Início</a></li>
-          <li><a href="/analise/index.html" aria-current="page">Projetos de Análise</a></li>
-          <li><a href="/ia-agentes/index.html">Projetos com IA</a></li>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/analise/index.html" aria-current="page">Analysis Projects</a></li>
+          <li><a href="/ia-agentes/index.html">AI Projects</a></li>
         </ul>
       </nav>
     </div>
@@ -27,41 +27,73 @@
     <article class="container section--analise">
 
       <header class="project-header">
-        <p class="eyebrow"><a href="/analise/index.html">← Projetos de Análise</a></p>
-        <h1>Projeto Final - Sprint 11</h1>
+        <p class="eyebrow"><a href="/analise/index.html">← Analysis Projects</a></p>
+        <h1>Food App Funnel &amp; A/A/B Test</h1>
       </header>
 
-      <!-- (a) texto explicativo + tecnologias -->
-      <section class="project-section" aria-labelledby="sobre-titulo">
-        <h2 id="sobre-titulo">Sobre o projeto</h2>
+      <section class="project-section" aria-labelledby="about-title">
+        <h2 id="about-title">About the project</h2>
+
         <p>
-          O projeto consiste em um estudo de caso de logs de um aplicativo, onde realizamos uma análise de comportamento por teste A/A/B para troca de fonte.
+          A food-products startup wanted to know two things: where users drop off before buying, and whether changing the app's font would hurt conversion.
+          I analyzed the app's event logs to map the purchase funnel and ran an A/A/B test to answer both questions.
+          This is the final project of TripleTen's Data Analytics bootcamp.
         </p>
-        <p>
-          Foi desenvolvido como parte do curso de Análise de Dados da TripleTen, com o objetivo de aplicar técnicas de análise exploratória, visualização de dados e storytelling para gerar insights a partir dos dados coletados.
-        </p>
-        <div class="tech-chips" aria-label="Tecnologias utilizadas">
+
+        <h3>Key findings</h3>
+        <ul>
+          <li>Only <strong>47.7%</strong> of users who reach the main screen complete a purchase.</li>
+          <li>
+            The biggest drop is the very first step: just <strong>61.9%</strong> move from the main screen to the offers screen (a loss of about 38%).
+            After that, retention is much healthier: 81.3% of users who see the offers reach the cart, and 94.8% of those complete payment.
+          </li>
+          <li>The A/A test passed: the two control groups (A1 and A2) showed no significant difference on any funnel event, which supports the random split of users.</li>
+          <li>The new font made no detectable difference: none of the 16 hypothesis tests was significant, even with a Bonferroni-corrected threshold (smallest p-value: 0.078).</li>
+        </ul>
+
+        <h3>Recommendation</h3>
+        <ul>
+          <li>Ship the new font. There is no evidence that it hurts (or helps) conversion at any step of the funnel.</li>
+          <li>Focus optimization efforts on the main screen → offers screen transition, where most of the potential revenue is lost. It is likely to pay off more than any cosmetic change like the font.</li>
+        </ul>
+
+        <h3>Approach</h3>
+        <ul>
+          <li>Cleaned about 244K event logs from 7,551 users (Jul 25 – Aug 7, 2019): renamed columns, fixed data types, labeled the experiment groups (A1, A2, B) and removed 413 duplicates (0.17%).</li>
+          <li>Found that data collection was only complete from Aug 1, so earlier logs (1.16% of events) were excluded. This left 7,534 users, evenly split across the three groups (2,484 / 2,513 / 2,537).</li>
+          <li>Built the funnel (main screen → offers → cart → payment) from unique users per event, leaving out the optional Tutorial event.</li>
+          <li>Ran two-proportion z-tests for every funnel event (A1 vs A2, A1 vs B, A2 vs B, and combined controls vs B), applying a Bonferroni correction for multiple comparisons.</li>
+        </ul>
+
+        <h3>Limitations</h3>
+        <ul>
+          <li>The analysis covers only 7 days of complete data.</li>
+          <li>"No significant difference" is not proof of "no effect": without a power analysis, small effects could have gone undetected.</li>
+          <li>The number of tests used in the correction grew during the analysis (from 12 to 16). Conclusions are unchanged, since the smallest p-value is far above any threshold.</li>
+        </ul>
+
+        <h3>Technologies</h3>
+        <div class="tech-chips" aria-label="Technologies used">
           <span class="badge badge--blue">Python</span>
           <span class="badge badge--mint">Pandas</span>
           <span class="badge badge--lav">Plotly</span>
-          <span class="badge badge--pink"> Matplotlib</span>
+          <span class="badge badge--pink">Matplotlib</span>
           <span class="badge badge--blue">Seaborn</span>
-          <span class="badge badge--mint">Proportions_ztest</span>
+          <span class="badge badge--mint">statsmodels</span>
           <span class="badge badge--lav">Jupyter Notebook</span>
         </div>
       </section>
 
-      <!-- (b) conteúdo do notebook convertido em markdown -->
-      <section class="project-section" aria-labelledby="notebook-titulo">
-        <h2 id="notebook-titulo">Notebook</h2>
-      <div class="placeholder-box">
-  <iframe src="notebook.html" width="100%" height="800" style="border:none; border-radius:10px;"></iframe>
-</div>
+      <section class="project-section" aria-labelledby="notebook-title">
+        <h2 id="notebook-title">Notebook</h2>
+        <p>The full analysis, with code and outputs.</p>
+        <div class="placeholder-box">
+          <iframe src="notebook.html" title="Food App Funnel and A/A/B Test notebook" width="100%" height="800" style="border:none; border-radius:10px;"></iframe>
+        </div>
       </section>
 
-      <!-- (d) botão para dashboard completo -->
       <section class="project-section">
-        <a class="cta-button" href="https://github.com/AleCS2002/AleCS2002.github.io/blob/main/analise/projeto-a/notebook.html">Ver repositório</a>
+        <a class="cta-button" href="https://github.com/AleCS2002/AleCS2002.github.io/blob/main/analise/projeto-a/notebook.html">View repository</a>
       </section>
 
     </article>
@@ -69,7 +101,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>Alexandre de Carvalho Silva · <a href="https://www.linkedin.com/in/alexandre-carvalho-silva-3888763a2/" target="_blank" rel="noopener">LinkedIn</a> </p>\\\\
+      <p>Alexandre de Carvalho Silva · <a href="https://www.linkedin.com/in/alexandre-carvalho-silva-3888763a2/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/AleCS2002" target="_blank" rel="noopener">GitHub</a></p>
     </div>
   </footer>
 
