@@ -131,9 +131,11 @@ main {
 
 .hero-dots {
   position: absolute;
-  inset: -40px -40px auto auto;
+  inset: 0 0 auto auto;
   width: 340px;
-  height: 340px;
+  height: 150px;            /* stays in the photo row, above the title */
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
   background-image:
     radial-gradient(var(--babyblue-deep) 6px, transparent 6px),
     radial-gradient(var(--pink-deep) 5px, transparent 5px),
@@ -144,6 +146,10 @@ main {
   opacity: 0.35;
   pointer-events: none;
   z-index: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-dots { width: 140px; height: 120px; }
 }
 
 .hero-inner {
